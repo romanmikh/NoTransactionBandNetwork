@@ -122,9 +122,11 @@ class MultiLayerPerceptron(torch.nn.ModuleList):
             self.append(Linear(i, n_units))
             self.append(ReLU())
         self.append(Linear(n_units, out_features))
+        self.dropout = torch.nn.Dropout(0.2)
 
     def forward(self, x):
         for layer in self:
+            x = self.dropout(x)
             x = layer(x)
         return x
 
